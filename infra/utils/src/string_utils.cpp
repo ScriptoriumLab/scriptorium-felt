@@ -6,7 +6,7 @@
 #include <windows.h>
 #endif
 
-namespace modian::inkstone::infra::utils {
+namespace modian::common::infra::utils {
 	std::wstring utf8_to_wstring(std::string_view str) {
 		return std::filesystem::path(str).c_str();
 	}
