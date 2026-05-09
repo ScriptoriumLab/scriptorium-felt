@@ -1,7 +1,12 @@
 cmake_minimum_required(VERSION 3.25)
-project(cpp_project_template)
+project(modian-common)
 
 set(CMAKE_CXX_STANDARD 23)
 
+include(CTest)
+
 add_subdirectory(src)
-add_subdirectory(tests)
+
+if (BUILD_TESTING)
+    add_subdirectory(tests)
+endif ()
