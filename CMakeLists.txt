@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 include(CTest)
 
 add_subdirectory(src)
+add_subdirectory(infra)
 
 if (BUILD_TESTING)
     add_subdirectory(tests)
