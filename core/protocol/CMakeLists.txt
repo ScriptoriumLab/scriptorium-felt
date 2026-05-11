@@ -5,4 +5,4 @@ target_include_directories(modian_common_core_protocol INTERFACE
     $<INSTALL_INTERFACE:include>
 )
 
-add_library(modian_common::core::protocol ALIAS modian_common_core_protocol)
+add_library(modian::common::core::protocol ALIAS modian_common_core_protocol)
