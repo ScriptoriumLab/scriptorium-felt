@@ -7,6 +7,7 @@ include(CTest)
 
 add_subdirectory(core)
 add_subdirectory(infra)
+add_subdirectory(service)
 
 if (BUILD_TESTING)
     add_subdirectory(tests)
