@@ -11,12 +11,15 @@ FetchContent_MakeAvailable(googletest)
 add_executable(
     modian_common_tests
     test_main.cpp
-    string_utils_test.cpp
+    infra/utils/string_utils_test.cpp
+    service/protocol/input_protocol_service_test.cpp
+    service/protocol/ui_protocol_service_test.cpp
 )
 
 target_link_libraries(
     modian_common_tests
     modian::common::infra::utils
+    modian::common::service::protocol
     gtest_main
     gmock_main
 )
