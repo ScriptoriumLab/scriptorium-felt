@@ -16,6 +16,7 @@ target_link_libraries(modian_common_service_protocol
         modian::common::core::protocol
     PRIVATE
         nlohmann_json::nlohmann_json
+        modian::common::core::logger
 )
 
 target_include_directories(modian_common_service_protocol PUBLIC

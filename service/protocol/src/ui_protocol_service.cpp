@@ -2,8 +2,7 @@
 
 #include <nlohmann/json.hpp>
 
-// TODO: should uncomment after we move logger into this repo
-// #include "modian/core/logger/logger_service.h"
+#include "modian/common/core/logger/logger_service.h"
 
 namespace modian::common::service {
 	std::string ui_protocol_service::build_render_state_request(
@@ -40,7 +39,7 @@ namespace modian::common::service {
 				action.type = common::core::protocol::ui::v1::action_type::PAGE_PREV;
 			}
 		} catch (const nlohmann::json::parse_error& e) {
-			// core::logger_service::logger()->error("JSON parse failed: {}", e.what());
+			core::logger_service::logger()->error("JSON parse failed: {}", e.what());
 		}
 
 		return action;
