@@ -8,16 +8,16 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(
-    modian_common_tests
+add_executable(modian_common_tests
     test_main.cpp
+    core/protocol/instruction_test.cpp
     infra/utils/string_utils_test.cpp
     service/protocol/input_protocol_service_test.cpp
     service/protocol/ui_protocol_service_test.cpp
 )
 
-target_link_libraries(
-    modian_common_tests
+target_link_libraries(modian_common_tests PRIVATE
+    modian::common::core::protocol
     modian::common::infra::utils
     modian::common::service::protocol
     gtest_main
