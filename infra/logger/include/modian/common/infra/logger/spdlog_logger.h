@@ -7,7 +7,7 @@
 namespace modian::common::infra::logger {
 	class spdlog_logger final : public core::base_logger {
 	public:
-		spdlog_logger();
+		spdlog_logger(std::string_view component_name);
 		~spdlog_logger() override;
 
 		void sink_it(core::log_level level, std::string_view msg) override;

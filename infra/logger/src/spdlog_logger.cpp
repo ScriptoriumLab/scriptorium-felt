@@ -10,8 +10,8 @@ namespace fs = std::filesystem;
 
 namespace modian::common::infra::logger {
 
-    spdlog_logger::spdlog_logger() {
-        const std::string logger_name = "inkstone_logger";
+    spdlog_logger::spdlog_logger(std::string_view component_name) {
+        const std::string logger_name = std::string(component_name) + "_logger";
 
         if (const auto existing_logger = spdlog::get(logger_name)) {
             logger_ = existing_logger;
@@ -33,7 +33,8 @@ namespace modian::common::infra::logger {
             free(userprofile_raw);
 
             const fs::path log_dir = home_dir / "Modian" / "Log";
-            const fs::path log_path = log_dir / "modian-inkstone.log";
+            const std::string file_name = std::string("modian-") + std::string(component_name) + ".log";
+            const fs::path log_path = log_dir / file_name;
 
             if (!fs::exists(log_dir)) {
                 std::error_code ec;
@@ -48,10 +49,9 @@ namespace modian::common::infra::logger {
 
             spdlog::set_default_logger(logger_);
             spdlog::set_level(spdlog::level::debug);
-
             spdlog::flush_on(spdlog::level::info);
 
-            logger_->info("=== Inkstone Server Started ===");
+            logger_->info("=== {} Started ===", component_name);
             logger_->info("Logger initialized at: {}", log_path.string());
 
         } catch (const spdlog::spdlog_ex& ex) {
@@ -62,7 +62,6 @@ namespace modian::common::infra::logger {
     }
 
     spdlog_logger::~spdlog_logger() {
-        logger_->info("=== Inkstone Server Stopping ===");
         spdlog::shutdown();
     }
 
