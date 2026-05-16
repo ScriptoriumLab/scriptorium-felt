@@ -16,9 +16,8 @@ target_include_directories(modian_common_infra_logger PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-# TODO: should consider the public or private
 target_link_libraries(modian_common_infra_logger
-    PUBLIC modian::common::core::logger
+    PRIVATE modian::common::core::logger
     PUBLIC spdlog::spdlog
 )
 
