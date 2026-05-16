@@ -1,6 +1,10 @@
 #include "modian/common/service/protocol/input_protocol_service.h"
 
 namespace modian::common::service {
+	std::string input_protocol_service::build_key_event_request(const core::protocol::input::v1::key_event& key_event) {
+        return key_event.content;
+	}
+
     core::protocol::input::v1::key_event input_protocol_service::parse_key_event_request(const std::string& request) {
 		return {request};
 	}
@@ -16,5 +20,22 @@ namespace modian::common::service {
 		draft_message += instruction.payload;
 
 		return draft_message;
+	}
+
+    core::protocol::input::v1::instruction input_protocol_service::parse_instruction_response(const std::string& response) {
+		if (response.empty()) return { core::protocol::input::v1::message_type::NONE, "" };
+
+		if (response.size() >= 2 && response.at(1) == ':') {
+			switch (response.at(0)) {
+            case static_cast<char>(core::protocol::input::v1::message_type::COMMIT):
+				return { core::protocol::input::v1::message_type::COMMIT, response.substr(2) };
+            case static_cast<char>(core::protocol::input::v1::message_type::UPDATE):
+				return { core::protocol::input::v1::message_type::UPDATE, response.substr(2) };
+			default:
+				return {};
+			}
+		}
+
+		return { core::protocol::input::v1::message_type::UPDATE, response };
 	}
 }
