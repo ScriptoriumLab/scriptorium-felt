@@ -3,6 +3,7 @@ add_library(modian_common_infra_ipc STATIC)
 if (WIN32)
     target_sources(modian_common_infra_ipc PRIVATE
         src/win/sync_named_pipe_server.cpp
+        src/win/sync_named_pipe_client.cpp
         src/win/async_named_pipe_server.cpp
         src/win/ipc_server_factory.cpp
     )

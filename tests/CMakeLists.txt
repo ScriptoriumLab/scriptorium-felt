@@ -12,15 +12,18 @@ add_executable(modian_common_tests
     test_main.cpp
     core/protocol/instruction_test.cpp
     core/protocol/key_event_test.cpp
+    infra/ipc/sync_named_pipe_client_test.cpp
     infra/utils/string_utils_test.cpp
     service/protocol/input_protocol_service_test.cpp
     service/protocol/ui_protocol_service_test.cpp
 )
 
 target_link_libraries(modian_common_tests PRIVATE
+    modian::common::core::ipc
     modian::common::core::protocol
-    modian::common::infra::utils
     modian::common::service::protocol
+    modian::common::infra::utils
+    modian::common::infra::ipc
     gtest_main
     gmock_main
 )
