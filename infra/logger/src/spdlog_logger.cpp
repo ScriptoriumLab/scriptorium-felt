@@ -33,7 +33,6 @@ namespace modian::common::infra::logger {
             free(userprofile_raw);
 
             const fs::path log_dir = home_dir / "Modian" / "Log";
-
             const fs::path log_path = log_dir / "modian-inkstone.log";
 
             if (!fs::exists(log_dir)) {
