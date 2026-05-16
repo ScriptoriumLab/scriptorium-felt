@@ -2,7 +2,7 @@
 
 namespace modian::common::service {
     core::protocol::input::v1::key_event input_protocol_service::parse_key_event_request(const std::string& request) {
-		return common::core::protocol::input::v1::key_event{request};
+		return {request};
 	}
 
 	std::string input_protocol_service::build_instruction_response(const core::protocol::input::v1::instruction& instruction) {
