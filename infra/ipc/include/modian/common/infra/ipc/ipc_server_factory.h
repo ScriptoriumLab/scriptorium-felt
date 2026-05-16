@@ -4,15 +4,12 @@
 #include <memory>
 
 #include "modian/common/core/ipc/isync_ipc_server.h"
-#include "modian/common/core/ipc/isync_ipc_client.h"
 #include "modian/common/core/ipc/iasync_ipc_server.h"
 
 namespace modian::common::infra::ipc {
     class ipc_server_factory {
     public:
         static std::unique_ptr<core::ipc::isync_ipc_server<std::string, std::string>> create_sync_ipc_server(const std::string& name);
-        static std::unique_ptr<core::ipc::isync_ipc_client<std::string, std::string>> create_sync_ipc_client(const std::string& name);
-
         static std::unique_ptr<core::ipc::iasync_ipc_server<std::string, std::string>> create_async_ipc_server(const std::string& name);
     };
 }

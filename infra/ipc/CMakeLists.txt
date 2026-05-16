@@ -6,6 +6,7 @@ if (WIN32)
         src/win/sync_named_pipe_client.cpp
         src/win/async_named_pipe_server.cpp
         src/win/ipc_server_factory.cpp
+        src/win/ipc_client_factory.cpp
     )
 endif()
 

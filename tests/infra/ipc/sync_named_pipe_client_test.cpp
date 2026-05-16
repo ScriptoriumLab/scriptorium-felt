@@ -3,7 +3,7 @@
 #include <thread>
 #include <windows.h>
 
-#include "modian/common/infra/ipc/ipc_server_factory.h"
+#include "modian/common/infra/ipc/ipc_client_factory.h"
 #include "modian/common/infra/utils/string_utils.h"
 
 const std::string TEST_PIPE_NAME = "\\\\.\\pipe\\modian_test_pipe_001";
@@ -80,7 +80,7 @@ protected:
 };
 
 TEST_F(sync_named_pipe_client_test, should_return_empty_string_when_server_is_not_running) {
-    auto client = modian::common::infra::ipc::ipc_server_factory::create_sync_ipc_client(TEST_PIPE_NAME);
+    auto client = modian::common::infra::ipc::ipc_client_factory::create_sync_ipc_client(TEST_PIPE_NAME);
 
     const auto response = client->sync_send("hello");
 
@@ -93,7 +93,7 @@ TEST_F(sync_named_pipe_client_test, should_get_response_successfully_when_server
     run_mock_server(expected_response);
     wait_for_server_ready();
 
-    auto client = modian::common::infra::ipc::ipc_server_factory::create_sync_ipc_client(TEST_PIPE_NAME);
+    auto client = modian::common::infra::ipc::ipc_client_factory::create_sync_ipc_client(TEST_PIPE_NAME);
 
     const auto actual_response = client->sync_send("ni");
 
@@ -105,7 +105,7 @@ TEST_F(sync_named_pipe_client_test, should_get_response_successfully_when_server
 TEST_F(sync_named_pipe_client_test, should_successfully_reconnect_when_server_restart) {
     run_mock_server("Response 1");
     wait_for_server_ready();
-    auto client = modian::common::infra::ipc::ipc_server_factory::create_sync_ipc_client(TEST_PIPE_NAME);
+    auto client = modian::common::infra::ipc::ipc_client_factory::create_sync_ipc_client(TEST_PIPE_NAME);
     ASSERT_EQ(client->sync_send("Req 1"), "Response 1");
     join_server();
 
