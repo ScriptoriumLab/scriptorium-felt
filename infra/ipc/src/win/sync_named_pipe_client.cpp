@@ -110,7 +110,7 @@ namespace modian::common::infra::ipc {
 
         if (!success) {
             common::core::logger_service::logger()->error("IPC Read failed. Error: {}", GetLastError());
-             close();
+            close();
         }
 
         return "";
