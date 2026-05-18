@@ -6,7 +6,7 @@ namespace modian::common::core::protocol::input::v1 {
 	class key_event {
     public:
         key_event() = default;
-        key_event(std::string content) : content{std::move(content)} {}
+        explicit key_event(std::string content) : content{std::move(content)} {}
 
         static key_event from_os_key(uint32_t key);
 
