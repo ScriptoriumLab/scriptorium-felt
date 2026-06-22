@@ -9,6 +9,10 @@ namespace modian::common::core::protocol::input::v1 {
 		COMMIT = 'C'
 	};
 
+    struct candidate_info {
+        std::string payload{};
+    };
+
 	struct instruction {
 		message_type type{message_type::NONE};
 		std::string payload{};
