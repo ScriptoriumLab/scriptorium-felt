@@ -1,5 +1,7 @@
 #include "modian/common/service/protocol/input_protocol_service.h"
 
+#include <nlohmann/json.hpp>
+
 namespace modian::common::service {
 	std::string input_protocol_service::build_key_event_request(const core::protocol::input::v1::key_event& key_event) {
         return key_event.content;
@@ -10,16 +12,21 @@ namespace modian::common::service {
 	}
 
 	std::string input_protocol_service::build_instruction_response(const core::protocol::input::v1::instruction& instruction) {
-		if (instruction.type == core::protocol::input::v1::message_type::NONE) return "";
-		if (instruction.payload.empty()) return "";
+        nlohmann::json j;
+        switch (instruction.type) {
+        case core::protocol::input::v1::message_type::COMMIT:
+            j["type"] = "C";
+            break;
+        case core::protocol::input::v1::message_type::UPDATE:
+            j["type"] = "U";
+            break;
+        case core::protocol::input::v1::message_type::NONE:
+            j["type"] = "N";
+            break;
+        }
+        j["payload"] = instruction.payload;
 
-		std::string draft_message;
-		draft_message.reserve(2 + instruction.payload.size());
-		draft_message += static_cast<char>(instruction.type);
-		draft_message += ':';
-		draft_message += instruction.payload;
-
-		return draft_message;
+		return j.dump(-1);
 	}
 
     core::protocol::input::v1::instruction input_protocol_service::parse_instruction_response(const std::string& response) {
