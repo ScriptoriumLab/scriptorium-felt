@@ -16,10 +16,5 @@ namespace modian::common::core::protocol::input::v1 {
 	struct instruction {
 		message_type type{message_type::NONE};
 		std::string payload{};
-
-		template<typename ...F>
-		auto unpack(F... rules) const {
-			return std::make_tuple(rules(*this)...);
-		}
 	};
 }

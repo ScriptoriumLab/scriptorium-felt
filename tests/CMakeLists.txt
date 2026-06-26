@@ -10,7 +10,6 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(modian_common_tests
     test_main.cpp
-    core/protocol/instruction_test.cpp
     core/protocol/key_event_test.cpp
     infra/ipc/sync_named_pipe_client_test.cpp
     infra/utils/string_utils_test.cpp
