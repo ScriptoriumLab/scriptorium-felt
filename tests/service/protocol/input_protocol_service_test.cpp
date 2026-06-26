@@ -20,6 +20,12 @@ TEST(input_protocol_service_test, should_return_C_message_when_when_build_commit
 	ASSERT_EQ(message, R"({"payload":"你","type":"C"})");
 }
 
+TEST(input_protocol_service_test, should_return_N_message_when_build_none_response) {
+    const modian::common::core::protocol::input::v1::instruction instruction { modian::common::core::protocol::input::v1::message_type::NONE, "" };
+    const auto message = modian::common::service::input_protocol_service::build_instruction_response(instruction);
+    ASSERT_EQ(message, R"({"payload":"","type":"N"})");
+}
+
 TEST(input_protocol_service_test, should_get_commit_and_correct_candidate_when_decode) {
 	const auto& protocol = modian::common::service::input_protocol_service::parse_instruction_response("C:你");
 	ASSERT_EQ(protocol.type, modian::common::core::protocol::input::v1::message_type::COMMIT);
