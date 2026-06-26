@@ -21,6 +21,7 @@ namespace modian::common::service {
             j["type"] = "U";
             break;
         case core::protocol::input::v1::message_type::NONE:
+        default:
             j["type"] = "N";
             break;
         }
