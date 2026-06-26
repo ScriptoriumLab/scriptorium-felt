@@ -2,6 +2,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include "modian/common/core/logger/logger_service.h"
+
 namespace modian::common::service {
 	std::string input_protocol_service::build_key_event_request(const core::protocol::input::v1::key_event& key_event) {
         return key_event.content;
@@ -31,19 +33,22 @@ namespace modian::common::service {
 	}
 
     core::protocol::input::v1::instruction input_protocol_service::parse_instruction_response(const std::string& response) {
-		if (response.empty()) return { core::protocol::input::v1::message_type::NONE, "" };
+        core::protocol::input::v1::instruction instruction{core::protocol::input::v1::message_type::NONE, ""};
 
-		if (response.size() >= 2 && response.at(1) == ':') {
-			switch (response.at(0)) {
-            case static_cast<char>(core::protocol::input::v1::message_type::COMMIT):
-				return { core::protocol::input::v1::message_type::COMMIT, response.substr(2) };
-            case static_cast<char>(core::protocol::input::v1::message_type::UPDATE):
-				return { core::protocol::input::v1::message_type::UPDATE, response.substr(2) };
-			default:
-				return {};
-			}
-		}
+        try {
+            const auto j = nlohmann::json::parse(response);
+            if (const std::string type_str = j.value("type", "N"); type_str == "C") {
+                instruction.type = core::protocol::input::v1::message_type::COMMIT;
+            } else if (type_str == "U") {
+                instruction.type = core::protocol::input::v1::message_type::UPDATE;
+            } else {
+                instruction.type = core::protocol::input::v1::message_type::NONE;
+            }
+            instruction.payload = j.value("payload", "");
+        } catch (const nlohmann::json::parse_error& e) {
+			core::logger_service::logger()->error("JSON parse failed: {}", e.what());
+        }
 
-		return { core::protocol::input::v1::message_type::UPDATE, response };
+        return instruction;
 	}
 }
