@@ -5,6 +5,20 @@
 #include "modian/common/core/logger/logger_service.h"
 
 namespace modian::common::service {
+    namespace {
+        nlohmann::json build_candidate_info(const core::protocol::input::v1::candidate_info& candidate_info) {
+            return {
+                {"payload", candidate_info.payload}
+            };
+        }
+
+        core::protocol::input::v1::candidate_info parse_candidate_info(const nlohmann::json& j) {
+            return core::protocol::input::v1::candidate_info{
+                j.value("payload", "")
+            };
+        }
+    }
+
 	std::string input_protocol_service::build_key_event_request(const core::protocol::input::v1::key_event& key_event) {
         return key_event.content;
 	}
@@ -12,18 +26,6 @@ namespace modian::common::service {
     core::protocol::input::v1::key_event input_protocol_service::parse_key_event_request(const std::string& request) {
 		return core::protocol::input::v1::key_event{request};
 	}
-
-    nlohmann::json build_candidate_info(const core::protocol::input::v1::candidate_info& candidate_info) {
-        return {
-            {"payload", candidate_info.payload}
-        };
-    }
-
-    core::protocol::input::v1::candidate_info parse_candidate_info(const nlohmann::json& j) {
-        return core::protocol::input::v1::candidate_info{
-            j.value("payload", "")
-        };
-    }
 
     std::string input_protocol_service::build_instruction_response(const core::protocol::input::v1::instruction& instruction) {
         nlohmann::json j;
