@@ -15,6 +15,6 @@ namespace modian::common::core::protocol::input::v1 {
 
 	struct instruction {
 		message_type type{message_type::NONE};
-		std::string payload{};
+	    candidate_info candidate_info;
 	};
 }

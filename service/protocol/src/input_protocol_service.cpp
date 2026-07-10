@@ -27,13 +27,15 @@ namespace modian::common::service {
             j["type"] = "N";
             break;
         }
-        j["payload"] = instruction.payload;
+        j["candidate_info"] = {
+            {"payload", instruction.candidate_info.payload}
+        };
 
 		return j.dump(-1);
 	}
 
     core::protocol::input::v1::instruction input_protocol_service::parse_instruction_response(const std::string& response) {
-        core::protocol::input::v1::instruction instruction{core::protocol::input::v1::message_type::NONE, ""};
+        core::protocol::input::v1::instruction instruction{core::protocol::input::v1::message_type::NONE, { "" }};
 
         try {
             const auto j = nlohmann::json::parse(response);
@@ -44,7 +46,7 @@ namespace modian::common::service {
             } else {
                 instruction.type = core::protocol::input::v1::message_type::NONE;
             }
-            instruction.payload = j.value("payload", "");
+            instruction.candidate_info.payload = j.value("candidate_info", nlohmann::json()).value("payload", "");
         } catch (const nlohmann::json::parse_error& e) {
 			core::logger_service::logger()->error("JSON parse failed: {}", e.what());
         }
