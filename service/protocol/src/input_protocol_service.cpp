@@ -13,7 +13,19 @@ namespace modian::common::service {
 		return core::protocol::input::v1::key_event{request};
 	}
 
-	std::string input_protocol_service::build_instruction_response(const core::protocol::input::v1::instruction& instruction) {
+    nlohmann::json build_candidate_info(const core::protocol::input::v1::candidate_info& candidate_info) {
+        return {
+            {"payload", candidate_info.payload}
+        };
+    }
+
+    core::protocol::input::v1::candidate_info parse_candidate_info(const nlohmann::json& j) {
+        return core::protocol::input::v1::candidate_info{
+            j.value("payload", "")
+        };
+    }
+
+    std::string input_protocol_service::build_instruction_response(const core::protocol::input::v1::instruction& instruction) {
         nlohmann::json j;
         switch (instruction.type) {
         case core::protocol::input::v1::message_type::COMMIT:
@@ -27,9 +39,7 @@ namespace modian::common::service {
             j["type"] = "N";
             break;
         }
-        j["candidate_info"] = {
-            {"payload", instruction.candidate_info.payload}
-        };
+        j["candidate_info"] = build_candidate_info(instruction.candidate_info);
 
 		return j.dump(-1);
 	}
@@ -46,7 +56,7 @@ namespace modian::common::service {
             } else {
                 instruction.type = core::protocol::input::v1::message_type::NONE;
             }
-            instruction.candidate_info.payload = j.value("candidate_info", nlohmann::json()).value("payload", "");
+            instruction.candidate_info = parse_candidate_info(j.value("candidate_info", nlohmann::json::object()));
         } catch (const nlohmann::json::parse_error& e) {
 			core::logger_service::logger()->error("JSON parse failed: {}", e.what());
         }
