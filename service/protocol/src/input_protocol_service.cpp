@@ -27,18 +27,7 @@ namespace modian::common::service {
 
     std::string input_protocol_service::build_instruction_response(const core::protocol::input::v1::instruction& instruction) {
         nlohmann::json j;
-        switch (instruction.type) {
-        case core::protocol::input::v1::message_type::COMMIT:
-            j["type"] = "C";
-            break;
-        case core::protocol::input::v1::message_type::UPDATE:
-            j["type"] = "U";
-            break;
-        case core::protocol::input::v1::message_type::NONE:
-        default:
-            j["type"] = "N";
-            break;
-        }
+	    j["type"] = std::string(1, static_cast<char>(instruction.type));
         j["candidate_info"] = build_candidate_info(instruction.candidate_info);
 
 		return j.dump(-1);
@@ -49,13 +38,7 @@ namespace modian::common::service {
 
         try {
             const auto j = nlohmann::json::parse(response);
-            if (const std::string type_str = j.value("type", "N"); type_str == "C") {
-                instruction.type = core::protocol::input::v1::message_type::COMMIT;
-            } else if (type_str == "U") {
-                instruction.type = core::protocol::input::v1::message_type::UPDATE;
-            } else {
-                instruction.type = core::protocol::input::v1::message_type::NONE;
-            }
+            instruction.type = static_cast<core::protocol::input::v1::message_type>(j.value("type", "N").front());
             instruction.candidate_info = parse_candidate_info(j.value("candidate_info", nlohmann::json::object()));
         } catch (const nlohmann::json::parse_error& e) {
 			core::logger_service::logger()->error("JSON parse failed: {}", e.what());
