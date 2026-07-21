@@ -1,11 +1,11 @@
-#include "modian/common/infra/ipc/ipc_server_factory.h"
+#include "scriptorium/felt/infra/ipc/ipc_server_factory.h"
 
 #include <memory>
 
-#include "modian/common/infra/ipc/win/sync_named_pipe_server.h"
-#include "modian/common/infra/ipc/win/async_named_pipe_server.h"
+#include "scriptorium/felt/infra/ipc/win/sync_named_pipe_server.h"
+#include "scriptorium/felt/infra/ipc/win/async_named_pipe_server.h"
 
-namespace modian::common::infra::ipc {
+namespace scriptorium::felt::infra::ipc {
     std::unique_ptr<core::ipc::isync_ipc_server<std::string, std::string>> ipc_server_factory::create_sync_ipc_server(const std::string& name) {
         return std::make_unique<sync_named_pipe_server>(name);
     }

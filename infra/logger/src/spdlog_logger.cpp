@@ -1,4 +1,4 @@
-#include "modian/common/infra/logger/spdlog_logger.h"
+#include "scriptorium/felt/infra/logger/spdlog_logger.h"
 
 #include <iostream>
 #include <filesystem>
@@ -8,7 +8,7 @@
 
 namespace fs = std::filesystem;
 
-namespace modian::common::infra::logger {
+namespace scriptorium::felt::infra::logger {
 
     spdlog_logger::spdlog_logger(std::string_view component_name) {
         const std::string logger_name = std::string(component_name) + "_logger";
@@ -32,8 +32,8 @@ namespace modian::common::infra::logger {
             const fs::path home_dir = userprofile_raw;
             free(userprofile_raw);
 
-            const fs::path log_dir = home_dir / "Modian" / "Log";
-            const std::string file_name = std::string("modian-") + std::string(component_name) + ".log";
+            const fs::path log_dir = home_dir / "Scriptorium" / "Log";
+            const std::string file_name = std::string("scriptorium-") + std::string(component_name) + ".log";
             const fs::path log_path = log_dir / file_name;
 
             if (!fs::exists(log_dir)) {

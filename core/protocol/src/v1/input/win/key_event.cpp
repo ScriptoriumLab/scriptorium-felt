@@ -1,8 +1,8 @@
-#include "modian/common/core/protocol/v1/input/key_event.h"
+#include "scriptorium/felt/core/protocol/v1/input/key_event.h"
 
 #include <windows.h>
 
-namespace modian::common::core::protocol::input::v1 {
+namespace scriptorium::felt::core::protocol::input::v1 {
     key_event key_event::from_os_key(uint32_t key) {
         switch (key) {
         case VK_LEFT:  return key_event{ std::string(CMD_LEFT) };

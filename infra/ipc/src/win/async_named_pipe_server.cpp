@@ -1,13 +1,13 @@
-#include "modian/common/infra/ipc/win/async_named_pipe_server.h"
+#include "scriptorium/felt/infra/ipc/win/async_named_pipe_server.h"
 
 #include <chrono>
 
-#include "modian/common/core/logger/logger_service.h"
-#include "modian/common/infra/utils/string_utils.h"
+#include "scriptorium/felt/core/logger/logger_service.h"
+#include "scriptorium/felt/infra/utils/string_utils.h"
 
 using namespace std::chrono_literals;
 
-namespace modian::common::infra::ipc {
+namespace scriptorium::felt::infra::ipc {
 
     async_named_pipe_server::async_named_pipe_server(std::string_view pipe_name)
         : pipe_name_(pipe_name) {
@@ -49,7 +49,7 @@ namespace modian::common::infra::ipc {
             }
 
             HANDLE h = CreateNamedPipeW(
-                common::infra::utils::utf8_to_wstring(pipe_name_).c_str(),
+                felt::infra::utils::utf8_to_wstring(pipe_name_).c_str(),
                 PIPE_ACCESS_DUPLEX,
                 PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT,
                 1, 4096, 4096, 0, nullptr

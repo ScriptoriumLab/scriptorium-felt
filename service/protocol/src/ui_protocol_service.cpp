@@ -1,10 +1,10 @@
-#include "modian/common/service/protocol/ui_protocol_service.h"
+#include "scriptorium/felt/service/protocol/ui_protocol_service.h"
 
 #include <nlohmann/json.hpp>
 
-#include "modian/common/core/logger/logger_service.h"
+#include "scriptorium/felt/core/logger/logger_service.h"
 
-namespace modian::common::service {
+namespace scriptorium::felt::service {
 	std::string ui_protocol_service::build_render_state_request(
 		bool visible,
 		double x, double y,
@@ -24,19 +24,19 @@ namespace modian::common::service {
 		return j.dump(-1);
 	}
 
-    common::core::protocol::ui::v1::user_action ui_protocol_service::parse_user_action_response(const std::string& response) {
-        common::core::protocol::ui::v1::user_action action{common::core::protocol::ui::v1::action_type::UNKNOWN, 0};
+    felt::core::protocol::ui::v1::user_action ui_protocol_service::parse_user_action_response(const std::string& response) {
+        felt::core::protocol::ui::v1::user_action action{felt::core::protocol::ui::v1::action_type::UNKNOWN, 0};
 
 		try {
 			const auto j = nlohmann::json::parse(response);
 
 			if (const std::string type_str = j.value("type", "Unknown"); type_str == "SelectCandidate") {
-				action.type = common::core::protocol::ui::v1::action_type::SELECT_CANDIDATE;
+				action.type = felt::core::protocol::ui::v1::action_type::SELECT_CANDIDATE;
 				action.payload = j.value("payload", 0);
 			} else if (type_str == "PageNext") {
-				action.type = common::core::protocol::ui::v1::action_type::PAGE_NEXT;
+				action.type = felt::core::protocol::ui::v1::action_type::PAGE_NEXT;
 			} else if (type_str == "PagePrev") {
-				action.type = common::core::protocol::ui::v1::action_type::PAGE_PREV;
+				action.type = felt::core::protocol::ui::v1::action_type::PAGE_PREV;
 			}
 		} catch (const nlohmann::json::parse_error& e) {
 			core::logger_service::logger()->error("JSON parse failed: {}", e.what());

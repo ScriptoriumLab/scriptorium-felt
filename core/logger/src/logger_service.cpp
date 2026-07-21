@@ -1,10 +1,10 @@
-#define MODIAN_LOGGER_EXPORTS
+#define SCRIPTORIUM_LOGGER_EXPORTS
 
-#include "modian/common/core/logger/logger_service.h"
-#include "modian/common/core/logger/console_logger.h"
+#include "scriptorium/felt/core/logger/logger_service.h"
+#include "scriptorium/felt/core/logger/console_logger.h"
 
-namespace modian::common::core {
-    static constexpr auto ascii_modian_ime = R"(
+namespace scriptorium::felt::core {
+    static constexpr auto ascii_scriptorium_ime = R"(
         =======================================================================================================================
 
          ,ggg, ,ggg,_,ggg,                                                               ,a8a,  ,ggg, ,ggg,_,ggg,     ,ggggggg,
@@ -26,7 +26,7 @@ namespace modian::common::core {
     std::atomic<int> update_logger_times{0};
 
     void logger_service::print_logo() {
-        logger()->info(ascii_modian_ime);
+        logger()->info(ascii_scriptorium_ime);
     }
 
     std::shared_ptr<base_logger> logger_service::logger() {

@@ -1,12 +1,12 @@
-#include "modian/common/infra/ipc/win/sync_named_pipe_client.h"
+#include "scriptorium/felt/infra/ipc/win/sync_named_pipe_client.h"
 
 #include <windows.h>
 #include <vector>
 
-#include "modian/common/core/logger/logger_service.h"
-#include "modian/common/infra/utils/string_utils.h"
+#include "scriptorium/felt/core/logger/logger_service.h"
+#include "scriptorium/felt/infra/utils/string_utils.h"
 
-namespace modian::common::infra::ipc {
+namespace scriptorium::felt::infra::ipc {
     constexpr DWORD BUFFER_SIZE = 4096;
 
     sync_named_pipe_client::sync_named_pipe_client(std::string_view pipe_name) : pipe_name_{pipe_name}, pipe_handle_(INVALID_HANDLE_VALUE) {}
@@ -29,7 +29,7 @@ namespace modian::common::infra::ipc {
 
         if (!WaitNamedPipeW(utils::utf8_to_wstring(pipe_name_).c_str(), 20)) {
             if (GetLastError() != ERROR_FILE_NOT_FOUND) {
-                common::core::logger_service::logger()->debug("retrying...");
+                felt::core::logger_service::logger()->debug("retrying...");
             }
             return false;
         }
@@ -45,19 +45,19 @@ namespace modian::common::infra::ipc {
         );
 
         if (hPipe == INVALID_HANDLE_VALUE) {
-            common::core::logger_service::logger()->error("Failed to connect pipe. Error: {}", GetLastError());
+            felt::core::logger_service::logger()->error("Failed to connect pipe. Error: {}", GetLastError());
             return false;
         }
 
         DWORD mode = PIPE_READMODE_MESSAGE;
         if (!SetNamedPipeHandleState(hPipe, &mode, nullptr, nullptr)) {
-            common::core::logger_service::logger()->error("Failed to set pipe mode. Error: {}", GetLastError());
+            felt::core::logger_service::logger()->error("Failed to set pipe mode. Error: {}", GetLastError());
             CloseHandle(hPipe);
             return false;
         }
 
         pipe_handle_ = hPipe;
-        common::core::logger_service::logger()->info("IPC Connected to Inkstone!");
+        felt::core::logger_service::logger()->info("IPC Connected to Inkstone!");
         return true;
     }
 
@@ -74,11 +74,11 @@ namespace modian::common::infra::ipc {
         );
 
         if (!success) {
-            common::core::logger_service::logger()->debug("IPC Write failed. Error: {}. Retrying...", GetLastError());
+            felt::core::logger_service::logger()->debug("IPC Write failed. Error: {}. Retrying...", GetLastError());
             close();
 
             if (!ensure_connection()) {
-                common::core::logger_service::logger()->error("IPC Reconnect failed.");
+                felt::core::logger_service::logger()->error("IPC Reconnect failed.");
                 return "";
             }
 
@@ -89,7 +89,7 @@ namespace modian::common::infra::ipc {
             );
 
             if (!success) {
-                common::core::logger_service::logger()->error("IPC Retry Write failed. Error: {}", GetLastError());
+                felt::core::logger_service::logger()->error("IPC Retry Write failed. Error: {}", GetLastError());
                 close();
                 return "";
             }
@@ -109,7 +109,7 @@ namespace modian::common::infra::ipc {
         }
 
         if (!success) {
-            common::core::logger_service::logger()->error("IPC Read failed. Error: {}", GetLastError());
+            felt::core::logger_service::logger()->error("IPC Read failed. Error: {}", GetLastError());
             close();
         }
 

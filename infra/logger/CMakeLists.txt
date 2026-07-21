@@ -7,18 +7,18 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(spdlog)
 add_compile_definitions(SPDLOG_HEADER_ONLY)
 
-add_library(modian_common_infra_logger STATIC
+add_library(scriptorium_felt_infra_logger STATIC
     src/spdlog_logger.cpp
 )
 
-target_include_directories(modian_common_infra_logger PUBLIC
+target_include_directories(scriptorium_felt_infra_logger PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(modian_common_infra_logger
-    PRIVATE modian::common::core::logger
+target_link_libraries(scriptorium_felt_infra_logger
+    PRIVATE scriptorium::felt::core::logger
     PUBLIC spdlog::spdlog
 )
 
-add_library(modian::common::infra::logger ALIAS modian_common_infra_logger)
+add_library(scriptorium::felt::infra::logger ALIAS scriptorium_felt_infra_logger)

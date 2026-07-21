@@ -1,4 +1,4 @@
-#include "modian/common/infra/utils/string_utils.h"
+#include "scriptorium/felt/infra/utils/string_utils.h"
 
 #include <filesystem>
 #include <cstdlib> // for std::getenv
@@ -6,7 +6,7 @@
 #include <windows.h>
 #endif
 
-namespace modian::common::infra::utils {
+namespace scriptorium::felt::infra::utils {
 	std::wstring utf8_to_wstring(std::string_view str) {
 		return std::filesystem::path(str).c_str();
 	}
@@ -22,7 +22,7 @@ namespace modian::common::infra::utils {
 			home = ".";
 		}
 
-		auto path = std::filesystem::path(home) / "Modian" / "Local" / "pinyin_dictionary.txt";
+		auto path = std::filesystem::path(home) / "Scriptorium" / "Local" / "pinyin_dictionary.txt";
 		return path.string();
 	}
 }

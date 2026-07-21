@@ -6,22 +6,22 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(json)
 
-add_library(modian_common_service_protocol STATIC
+add_library(scriptorium_felt_service_protocol STATIC
     src/input_protocol_service.cpp
     src/ui_protocol_service.cpp
 )
 
-target_link_libraries(modian_common_service_protocol
+target_link_libraries(scriptorium_felt_service_protocol
     PUBLIC
-        modian::common::core::protocol
+        scriptorium::felt::core::protocol
     PRIVATE
         nlohmann_json::nlohmann_json
-        modian::common::core::logger
+        scriptorium::felt::core::logger
 )
 
-target_include_directories(modian_common_service_protocol PUBLIC
+target_include_directories(scriptorium_felt_service_protocol PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
 
-add_library(modian::common::service::protocol ALIAS modian_common_service_protocol)
+add_library(scriptorium::felt::service::protocol ALIAS scriptorium_felt_service_protocol)

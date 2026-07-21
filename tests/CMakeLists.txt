@@ -8,7 +8,7 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(modian_common_tests
+add_executable(scriptorium_felt_tests
     test_main.cpp
     core/protocol/key_event_test.cpp
     infra/ipc/sync_named_pipe_client_test.cpp
@@ -17,12 +17,12 @@ add_executable(modian_common_tests
     service/protocol/ui_protocol_service_test.cpp
 )
 
-target_link_libraries(modian_common_tests PRIVATE
-    modian::common::core::ipc
-    modian::common::core::protocol
-    modian::common::service::protocol
-    modian::common::infra::utils
-    modian::common::infra::ipc
+target_link_libraries(scriptorium_felt_tests PRIVATE
+    scriptorium::felt::core::ipc
+    scriptorium::felt::core::protocol
+    scriptorium::felt::service::protocol
+    scriptorium::felt::infra::utils
+    scriptorium::felt::infra::ipc
     gtest_main
     gmock_main
 )

@@ -1,15 +1,15 @@
-#include "modian/common/infra/ipc/win/sync_named_pipe_server.h"
+#include "scriptorium/felt/infra/ipc/win/sync_named_pipe_server.h"
 
 #include <windows.h>
 #include <utility>
 #include <chrono>
 
-#include "modian/common/core/logger/logger_service.h"
-#include "modian/common/infra/utils/string_utils.h"
+#include "scriptorium/felt/core/logger/logger_service.h"
+#include "scriptorium/felt/infra/utils/string_utils.h"
 
 using namespace std::chrono_literals;
 
-namespace modian::common::infra::ipc {
+namespace scriptorium::felt::infra::ipc {
 	sync_named_pipe_server::sync_named_pipe_server(std::string_view pipe_name) : pipe_name_{pipe_name} {}
 
 	sync_named_pipe_server::~sync_named_pipe_server() {

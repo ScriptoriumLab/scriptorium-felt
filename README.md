@@ -17,13 +17,13 @@ Our ultimate goals are:
 
 This repository strictly follows Clean Architecture principles and is divided into the following core layers (CMake targets):
 
-* **Core (`scriptorium::common::core::*`)**
+* **Core (`scriptorium::felt::core::*`)**
   The pure domain layer. Contains zero-dependency pure virtual interfaces (e.g., `iasync_ipc_server`) and core data structures (Protocol Structs).
-* **Service (`scriptorium::common::service::*`)**
+* **Service (`scriptorium::felt::service::*`)**
   The protocol processing layer. Responsible for converting between underlying data and core domain models (e.g., JSON serialization and deserialization).
-* **Infra (`scriptorium::common::infra::*`)**
+* **Infra (`scriptorium::felt::infra::*`)**
   The infrastructure implementation layer. Embraces OS-specific APIs and heavy third-party libraries (e.g., Windows Named Pipe IPC implementations, Spdlog wrappers, and charset utilities).
-* **Test Infra (`scriptorium::common::test_infra::*`)**
+* **Test Infra (`scriptorium::felt::test_infra::*`)**
   Provides unified mocks and testing scaffolds for the entire ecosystem.
 
 ## Getting Started

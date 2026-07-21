@@ -1,8 +1,8 @@
-add_library(modian_common_core_observer INTERFACE)
+add_library(scriptorium_felt_core_observer INTERFACE)
 
-target_include_directories(modian_common_core_observer INTERFACE
+target_include_directories(scriptorium_felt_core_observer INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
 
-add_library(modian::common::core::observer ALIAS modian_common_core_observer)
+add_library(scriptorium::felt::core::observer ALIAS scriptorium_felt_core_observer)

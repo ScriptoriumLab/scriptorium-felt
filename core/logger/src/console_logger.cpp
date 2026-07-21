@@ -1,8 +1,8 @@
-#include "modian/common/core/logger/console_logger.h"
+#include "scriptorium/felt/core/logger/console_logger.h"
 
 #include <iostream>
 
-namespace modian::common::core {
+namespace scriptorium::felt::core {
 	void console_logger::sink_it(const log_level level, const std::string_view msg) {
 		switch (level) {
 		case log_level::debug: std::cout << "[DEBUG] "; break;

@@ -1,10 +1,10 @@
-#include "modian/common/service/protocol/input_protocol_service.h"
+#include "scriptorium/felt/service/protocol/input_protocol_service.h"
 
 #include <nlohmann/json.hpp>
 
-#include "modian/common/core/logger/logger_service.h"
+#include "scriptorium/felt/core/logger/logger_service.h"
 
-namespace modian::common::service {
+namespace scriptorium::felt::service {
     namespace {
         nlohmann::json build_candidate_info(const core::protocol::input::v1::candidate_info& candidate_info) {
             return {
